@@ -1,6 +1,9 @@
+#参考 https://konchangakita.hatenablog.com/entry/2020/07/27/220000
+
 import cv2 as cv
 
 #カメラインスタンス作成
+#Rock5Bの外部カメラの場合11
 cap = cv.VideoCapture(11)
 
 assert cap.isOpened(), 'Cannot capture source'
