@@ -12,7 +12,7 @@ def detectAndDisplay(frame):
 
     # 顔の検出
     faces = face_cascade.detectMultiScale(frame_gray)
-    glasses = face_cascade.detectMultiScale(frame_gray)
+    glasses = glasses_cascade.detectMultiScale(frame_gray)
 
     # 複数の顔が検出された場合、ひとつづつ枠を付ける
     for (x,y,w,h) in faces:
@@ -27,10 +27,17 @@ def detectAndDisplay(frame):
 if __name__ == "__main__":
 
     face_cascade = cv.CascadeClassifier()
-    face_cascade.load(cv.samples.findFile(face_cascade_path))
+    glasses_cascade = cv.CascadeClassifier()
+    '''face_cascade.load(cv.samples.findFile(face_cascade_path))
+    glasses_cascade.load(cv.samples.findFile(glasses_cascade_path))'''
+
 
     if not face_cascade.load(cv.samples.findFile(face_cascade_path)):
         print('--(!)Error loading face cascade')
+        exit(0)
+
+    if not glasses_cascade.load(cv.samples.findFile(glasses_cascade_path)):
+        print('--(!)Error loading glasses cascade')
         exit(0)
 
     cap = cv.VideoCapture(11)
