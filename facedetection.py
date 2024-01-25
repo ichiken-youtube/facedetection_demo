@@ -5,7 +5,6 @@ import cv2 as cv
 face_cascade_path = 'opencv/data/haarcascades/haarcascade_frontalface_default.xml'
 glasses_cascade_path = 'opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml'
 
-
 def detectAndDisplay(frame):
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     frame_gray = cv.equalizeHist(frame_gray)
@@ -21,16 +20,13 @@ def detectAndDisplay(frame):
     for (x,y,w,h) in glasses:
         frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
 
-
     cv.imshow('OpenCV - facedetect', frame)
+
 
 if __name__ == "__main__":
 
     face_cascade = cv.CascadeClassifier()
     glasses_cascade = cv.CascadeClassifier()
-    '''face_cascade.load(cv.samples.findFile(face_cascade_path))
-    glasses_cascade.load(cv.samples.findFile(glasses_cascade_path))'''
-
 
     if not face_cascade.load(cv.samples.findFile(face_cascade_path)):
         print('--(!)Error loading face cascade')
