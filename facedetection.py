@@ -16,7 +16,7 @@ def detectAndDisplay(frame):
     for (x,y,w,h) in faces:
         center = (x + w//2, y + h//2)
         #frame = cv.ellipse(frame, center, (w//2, h//2), 0, 0, 360, (255, 0, 255), 4)
-        frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 0), thickness=3, lineType=cv.LINE_4, hift=0)
+        frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 0), thickness=3, lineType=cv.LINE_4, shift=0)
         
         #faceROI = frame_gray[y:y+h,x:x+w]
 
