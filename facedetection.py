@@ -3,6 +3,7 @@
 import cv2 as cv
 
 face_cascade_path = 'opencv/data/haarcascades/haarcascade_frontalface_default.xml'
+eye_cascade_path = 'opencv/data/haarcascades/haarcascade_eye.xml'
 glasses_cascade_path = 'opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml'
 
 def detectAndDisplay(frame):
@@ -11,14 +12,22 @@ def detectAndDisplay(frame):
 
     # 顔の検出
     faces = face_cascade.detectMultiScale(frame_gray)
-    glasses = glasses_cascade.detectMultiScale(frame_gray)
 
     # 複数の顔が検出された場合、ひとつづつ枠を付ける
     for (x,y,w,h) in faces:
         frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 0), thickness=3, lineType=cv.LINE_4, shift=0)
+
+        faceROI = frame_gray[y:y+h,x:x+w]
+        # 顔ごとに目を検出する
+        eyes = eye_cascade.detectMultiScale(faceROI)
+        # 顔ごとにメガネを検出する
+        #glasses = glasses_cascade.detectMultiScale(faceROI)
         
-    for (x,y,w,h) in glasses:
-        frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
+        for (x,y,w,h) in eyes:
+            frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
+
+        #for (x,y,w,h) in glasses:
+        #    frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 255), thickness=3, lineType=cv.LINE_4, shift=0)
 
     cv.imshow('OpenCV - facedetect', frame)
 
@@ -26,10 +35,15 @@ def detectAndDisplay(frame):
 if __name__ == "__main__":
 
     face_cascade = cv.CascadeClassifier()
+    eye_cascade = cv.CascadeClassifier()
     glasses_cascade = cv.CascadeClassifier()
 
     if not face_cascade.load(cv.samples.findFile(face_cascade_path)):
         print('--(!)Error loading face cascade')
+        exit(0)
+
+    if not eye_cascade.load(cv.samples.findFile(eye_cascade_path)):
+        print('--(!)Error loading eye cascade')
         exit(0)
 
     if not glasses_cascade.load(cv.samples.findFile(glasses_cascade_path)):
