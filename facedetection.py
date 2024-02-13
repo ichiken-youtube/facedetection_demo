@@ -25,7 +25,7 @@ def detectAndDisplay(frame):
         #glasses = glasses_cascade.detectMultiScale(faceROI)
         
         for (x2,y2,w2,h2) in eyes:
-            frame = cv.rectangle(frame, pt1=(x2, y2), pt2=(x2+w2, y2+h2), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
+            frame = cv.rectangle(frame, pt1=(x+x2, y+y2), pt2=(x+x2+w2, y+y2+h2), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
 
         #for (x,y,w,h) in glasses:
         #    frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 255), thickness=3, lineType=cv.LINE_4, shift=0)
