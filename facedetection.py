@@ -17,14 +17,15 @@ def detectAndDisplay(frame):
     for (x,y,w,h) in faces:
         frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 0), thickness=3, lineType=cv.LINE_4, shift=0)
 
+        #顔の範囲切り出し
         faceROI = frame_gray[y:y+h,x:x+w]
         # 顔ごとに目を検出する
         eyes = eye_cascade.detectMultiScale(faceROI)
         # 顔ごとにメガネを検出する
         #glasses = glasses_cascade.detectMultiScale(faceROI)
         
-        for (x,y,w,h) in eyes:
-            frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
+        for (x2,y2,w2,h2) in eyes:
+            frame = cv.rectangle(frame, pt1=(x+x2, y+y2), pt2=(x+x2+w2, y+y2+h2), color=(0, 0, 255), thickness=3, lineType=cv.LINE_4, shift=0)
 
         #for (x,y,w,h) in glasses:
         #    frame = cv.rectangle(frame, pt1=(x, y), pt2=(x+w, y+h), color=(0, 255, 255), thickness=3, lineType=cv.LINE_4, shift=0)
@@ -51,6 +52,14 @@ if __name__ == "__main__":
         exit(0)
 
     cap = cv.VideoCapture(11)
+    #画像サイズ指定
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
+    #露光自動
+    cap.set(cv.CAP_PROP_AUTO_EXPOSURE, 1)
+    #フォーカス自動
+    cap.set(cv.CAP_PROP_AUTOFOCUS, 1)
+
     try:   
         while True:
             ret, frame = cap.read()

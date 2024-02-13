@@ -5,6 +5,14 @@ import cv2 as cv
 #カメラインスタンス作成
 #Rock5Bの外部カメラの場合11
 cap = cv.VideoCapture(11)
+#画像サイズ指定
+cap.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
+#露光自動
+cap.set(cv.CAP_PROP_AUTO_EXPOSURE, 1)
+#フォーカス自動
+cap.set(cv.CAP_PROP_AUTOFOCUS, 1)
+
 
 assert cap.isOpened(), 'Cannot capture source'
 
